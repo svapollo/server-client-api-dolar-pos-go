@@ -151,6 +151,7 @@ func initDB(path string) (*sql.DB, error) {
 	db.SetConnMaxLifetime(0)
 
 	// PRAGMAs para reduzir latência de escrita (trade-offs: durabilidade)
+	// Foi necessário pra nao dar timeout nos 10ms de persistência no sqlite
 	_, _ = db.Exec("PRAGMA journal_mode = WAL;")
 	_, _ = db.Exec("PRAGMA synchronous = OFF;")
 	_, _ = db.Exec("PRAGMA temp_store = MEMORY;")
